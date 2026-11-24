@@ -1,0 +1,202 @@
+
+
+# ============================================================
+# 1. FOOD DATASET
+# ============================================================
+
+food_groups = [
+
+    # Category 1: Cereals and Grains
+    [
+        {"name": "Whole Wheat Bread", "weight": 60, "cal": 151, "prot": 7.5, "carb": 25.6, "fat": 2.1, "calcium": 96.6, "zinc": 1.1, "folate": 25.2},
+        {"name": "Cooked White Rice", "weight": 100, "cal": 130, "prot": 2.7, "carb": 28.2, "fat": 0.3, "calcium": 10, "zinc": 0.5, "folate": 58},
+        {"name": "Cooked Rice Noodles", "weight": 100, "cal": 108, "prot": 1.8, "carb": 24, "fat": 0.2, "calcium": 4, "zinc": 0.3, "folate": 1},
+        {"name": "Pasta", "weight": 150, "cal": 237, "prot": 8.7, "carb": 46.3, "fat": 1.4, "calcium": 10.5, "zinc": 0.8, "folate": 10.5},
+        {"name": "Oat Bran", "weight": 40, "cal": 98, "prot": 6.9, "carb": 26.5, "fat": 2.8, "calcium": 23.2, "zinc": 1.2, "folate": 20.8},
+    ],
+
+    # Category 2: Protein
+    [
+        {"name": "Peanut Butter", "weight": 15, "cal": 88, "prot": 3.3, "carb": 3.6, "fat": 7.4, "calcium": 8.1, "zinc": 0.4, "folate": 5.3},
+        {"name": "Fried Egg", "weight": 50, "cal": 98, "prot": 6.8, "carb": 0.4, "fat": 7.4, "calcium": 31, "zinc": 0.7, "folate": 25.5},
+        {"name": "Omelette", "weight": 60, "cal": 92, "prot": 6.3, "carb": 0.4, "fat": 7, "calcium": 28.8, "zinc": 0.7, "folate": 23.4},
+        {"name": "Canned Sardine", "weight": 40, "cal": 83, "prot": 9.8, "carb": 0, "fat": 4.6, "calcium": 152.8, "zinc": 0.5, "folate": 4},
+        {"name": "Hard Boiled Egg", "weight": 50, "cal": 78, "prot": 6.3, "carb": 0.6, "fat": 5.3, "calcium": 25, "zinc": 0.5, "folate": 22},
+    ],
+
+    # Category 3: Fruits
+    [
+        {"name": "Dates (Deglet Noor)", "weight": 20, "cal": 56, "prot": 0.5, "carb": 15, "fat": 0.1, "calcium": 7.8, "zinc": 0.1, "folate": 3.8},
+        {"name": "Banana", "weight": 60, "cal": 53, "prot": 0.7, "carb": 13.7, "fat": 0.2, "calcium": 3, "zinc": 0.1, "folate": 12},
+        {"name": "Mango", "weight": 100, "cal": 60, "prot": 0.8, "carb": 15, "fat": 0.4, "calcium": 11, "zinc": 0.1, "folate": 43},
+        {"name": "Papaya", "weight": 110, "cal": 47, "prot": 0.5, "carb": 11.9, "fat": 0.3, "calcium": 22, "zinc": 0.1, "folate": 40.7},
+        {"name": "Orange", "weight": 70, "cal": 33, "prot": 0.7, "carb": 8.2, "fat": 0.1, "calcium": 28, "zinc": 0.1, "folate": 21},
+    ],
+
+    # Category 4: Vegetables
+    [
+        {"name": "Raw Broccoli", "weight": 40, "cal": 14, "prot": 1.1, "carb": 2.7, "fat": 0.2, "calcium": 18.8, "zinc": 0.2, "folate": 25.2},
+        {"name": "Cauliflower", "weight": 40, "cal": 10, "prot": 0.8, "carb": 2, "fat": 0.1, "calcium": 8.8, "zinc": 0.1, "folate": 22.8},
+        {"name": "Cabbage", "weight": 40, "cal": 10, "prot": 0.5, "carb": 2.3, "fat": 0, "calcium": 16, "zinc": 0.1, "folate": 17.2},
+        {"name": "Water Spinach", "weight": 40, "cal": 8, "prot": 1, "carb": 1.3, "fat": 0.1, "calcium": 30.8, "zinc": 0.1, "folate": 22.8},
+    ],
+
+    # Category 5: Dairy
+    [
+        {"name": "Low Fat Yogurt", "weight": 270, "cal": 170, "prot": 14.2, "carb": 19, "fat": 4.2, "calcium": 494.1, "zinc": 2.4, "folate": 29.7},
+        {"name": "Goat Milk", "weight": 250, "cal": 173, "prot": 8.9, "carb": 11.1, "fat": 10.4, "calcium": 335, "zinc": 0.8, "folate": 2.5},
+        {"name": "Chocolate Milk", "weight": 250, "cal": 190, "prot": 7.5, "carb": 30.3, "fat": 4.8, "calcium": 272.5, "zinc": 1, "folate": 5},
+        {"name": "Whole Milk", "weight": 250, "cal": 153, "prot": 7.9, "carb": 12, "fat": 8.1, "calcium": 282.5, "zinc": 0.9, "folate": 12.5},
+        {"name": "Plain Yogurt", "weight": 270, "cal": 165, "prot": 9.4, "carb": 12.6, "fat": 8.8, "calcium": 326.7, "zinc": 1.6, "folate": 18.9},
+    ]
+]
+
+
+# ============================================================
+# 2. NUTRITIONAL SCORE FUNCTION
+# ============================================================
+
+def compute_score(item, alpha=1.0, beta=2.0, gamma=0.5):
+
+    score = (
+        alpha * item["cal"] +
+        beta * item["prot"] +
+        alpha * item["carb"] +
+        gamma * item["fat"] +
+        alpha * item["calcium"] +
+        alpha * item["zinc"] +
+        alpha * item["folate"]
+    )
+
+    return score
+
+
+# ============================================================
+# 3. DYNAMIC PROGRAMMING OPTIMIZATION
+# ============================================================
+
+def optimize_meal(categories, max_capacity):
+
+    dp = {
+        0: (0, [])
+    }
+
+    for group in categories:
+
+        new_dp = {}
+
+        for current_weight, (current_score, selected_items) in dp.items():
+
+            for item in group:
+
+                new_weight = current_weight + item["weight"]
+
+                if new_weight <= max_capacity:
+
+                    new_score = current_score + compute_score(item)
+
+                    if (
+                        new_weight not in new_dp
+                        or new_score > new_dp[new_weight][0]
+                    ):
+
+                        new_dp[new_weight] = (
+                            new_score,
+                            selected_items + [item]
+                        )
+
+        dp = new_dp
+
+    if not dp:
+        return None, None
+
+    best_weight, (best_score, best_items) = max(
+        dp.items(),
+        key=lambda x: x[1][0]
+    )
+
+    return best_score, best_items
+
+
+
+# ============================================================
+# 4. RUN OPTIMIZATION (MAXIMUM CAPACITY: 500 g)
+# ============================================================
+
+max_capacity = 500
+
+score, selected_items = optimize_meal(food_groups, max_capacity)
+
+
+# ============================================================
+# 5. DISPLAY SELECTED FOOD ITEMS AND INDIVIDUAL SCORES
+# ============================================================
+
+if selected_items is not None:
+
+    print("=" * 65)
+    print("OPTIMAL BREAKFAST MEAL")
+    print("=" * 65)
+
+    for item in selected_items:
+
+        item_score = compute_score(item)
+
+        print(
+            f"\n{item['name']}"
+            f"\nWeight: {item['weight']} g"
+            f"\nEnergy: {item['cal']} kcal"
+            f"\nProtein: {item['prot']} g"
+            f"\nCarbohydrates: {item['carb']} g"
+            f"\nFat: {item['fat']} g"
+            f"\nCalcium: {item['calcium']} mg"
+            f"\nZinc: {item['zinc']} mg"
+            f"\nFolate: {item['folate']} mcg"
+            f"\nIndividual Nutrition Score: {item_score:.2f}"
+        )
+
+    # ========================================================
+    # 6. CALCULATE TOTAL NUTRITIONAL VALUES
+    # ========================================================
+
+    total_weight = sum(item["weight"] for item in selected_items)
+    total_cal = sum(item["cal"] for item in selected_items)
+    total_prot = sum(item["prot"] for item in selected_items)
+    total_carb = sum(item["carb"] for item in selected_items)
+    total_fat = sum(item["fat"] for item in selected_items)
+    total_calcium = sum(item["calcium"] for item in selected_items)
+    total_zinc = sum(item["zinc"] for item in selected_items)
+    total_folate = sum(item["folate"] for item in selected_items)
+
+    # ========================================================
+    # 7. DISPLAY TOTAL RESULTS
+    # ========================================================
+
+    print("\n" + "=" * 65)
+    print("TOTAL NUTRITIONAL VALUES")
+    print("=" * 65)
+
+    print("Number of Selected Items:", len(selected_items))
+    print("Total Weight:", total_weight, "g")
+    print("Maximum Capacity:", max_capacity, "g")
+    print("Remaining Capacity:", max_capacity - total_weight, "g")
+
+    print("-" * 65)
+
+    print("Total Energy:", round(total_cal, 2), "kcal")
+    print("Total Protein:", round(total_prot, 2), "g")
+    print("Total Carbohydrates:", round(total_carb, 2), "g")
+    print("Total Fat:", round(total_fat, 2), "g")
+    print("Total Calcium:", round(total_calcium, 2), "mg")
+    print("Total Zinc:", round(total_zinc, 2), "mg")
+    print("Total Folate:", round(total_folate, 2), "mcg")
+
+    print("-" * 65)
+
+    print("Total Nutrition Score:", round(score, 2))
+
+    print("=" * 65)
+
+else:
+
+    print("No feasible meal combination found.")
